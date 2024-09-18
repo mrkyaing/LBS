@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "OverDueBook";
+}
+<h3>OverDueBook</h3>
+@{
+    var info = ViewData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(ViewData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<form action="/overduebook/overduebook" method="post">
+   
+    <div class="mb-3">
+        <label class="form-label">FromDate</label>
+        <input type="date" class="form-control"  required name="FromDate">
+    </div>
+    <div class="mb-3">
+
+        <div class="mb-3">
+            <label class="form-label">ToDate</label>
+            <input type="date" class="form-control" required name="ToDate">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Book</label>
+        <select class="form-select" name="Bookid">
+            <option selected>Select Book</option>
+            @foreach (var Book in ViewBag.Book)
+            {
+                <option value="@Book.id">@Book.Title</option>
+            }
+        </select>
+    </div>
+    
+
+    
+
+    <button type="submit" class="btn btn-primary">Download</button>
+    <button type="submit" class="btn btn-primary">Cancel</button>
+   
+</form>
+

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CategoryViewModel> 
+<h3>Category List</h3>
+
+@{
+    var info = TempData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(TempData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+
+
+<!-- Include DataTables.net CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+
+
+<table class="table " id="CategoryTable">
+    <thead>
+        @{int i=1;}
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        { @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <a href="/category/edit?id=@item.id" class="btn btn-primary">Edit</a>
+                        <a href="/category/delete?id=@item.id" class="btn btn-danger"onclick="return confirm('Are u sure to delete');">Delete</a>
+                    </td>
+
+                </tr>
+                i++;
+            }
+
+        }
+        else
+        {
+            <div class="alert alert-success" role="alert">
+             There is no Data!!
+            </div>
+        }
+
+       
+       
+    </tbody>
+</table>
+<a href="/Category/Entry" class="btn btn-outline-primary">Entry</a>
+<!-- Include jQuery and DataTables.net JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script>
+   
+        $(document).ready(function () {
+            $('#CategoryTable').DataTable({
+                "lengthMenu": [5, 10, 15, 20],
+                "paging": true,
+                "searching": true, 
+                "ordering": true,
+                "info": true
+            });
+        });
+</script>

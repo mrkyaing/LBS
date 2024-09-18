@@ -1,0 +1,102 @@
+﻿@model IEnumerable<BookViewModel>
+<h3>Book List</h3>
+@{
+    var info = TempData["Info"];
+    if (info != null)
+    {
+        if (Convert.ToBoolean(TempData["status"]))
+        {
+            <div class="alert alert-success" role="alert" id="statusAlert">
+                @info
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert" id="statusAlert">
+                @info
+            </div>
+        }
+    }
+}
+<!-- Include DataTables.net CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" integrity="sha512-f8gN/IhfI+0E9Fc/LKtjVq4ywfhYAVeMGKsECzDUHcFJ5teVwvKTqizm+5a84FINhfrgdvjX8hEJbem2io1iTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<table class="table" id="bookTable">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Category</th>
+            <th scope="col">Author</th>
+            <th scope="col">Publisher</th>
+            <th scope="col">PublicationYear</th>
+            <th scope="col">NumberOfCopies</th>
+            <th scope="col">Language</th>
+            <th scope="col">Description</th>
+            <th scope="col">Version</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">UnitPrice</th>
+            <th scope="col">Actions</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@item.Title</td>
+                    <td>@item.CategoryInfo</td>
+                    <td>@item.AuthorInfo</td>
+                    <td>@item.PublisherInfo</td>
+                    <td>@item.PublicationYear</td>
+                    <td>@item.NumberOfCopies</td>
+                    <td>@item.language</td>
+                    <td>@item.Description</td>
+                    <td>@item.Version</td>
+                    <td>@item.ISBN</td>
+                    <td>@item.UnitPrice</td>
+                    <td>
+                        <a href="/book/edit?id=@item.id" class="btn btn-primary">Edit</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-danger" data-id="@item.id">Delete</a>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="14" class="text-center">
+                    <div class="alert alert-warning" role="alert">
+                        There is no Data!
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/book/Entry" class="btn btn-outline-primary">Entry</a>
+<button id="btnHi">Hi</button>
+<!-- Include jQuery and DataTables.net JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<!-- Include the JavaScript file -->
+<script src="~/js/book.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#bookTable').DataTable({
+            "lengthMenu": [5, 10, 15, 20],
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true
+        });
+    });
+</script>

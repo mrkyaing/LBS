@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Publisher";
+}
+<h3>Publisher Entry</h3>
+@{
+    var info = ViewData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(ViewData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<form action="/publisher/entry" method="post">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" placeholder="type name" required name="Name">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Adress</label>
+        <textarea class="form-control" placeholder="type address.." name="Adress"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Contact Info</label>
+        <input type="text" class="form-control" placeholder="type ContactInfo" required name="ContactInfo">
+
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Entry</button>
+    <a href="/publisher/list" class="btn btn-outline-primary">List</a>
+</form>

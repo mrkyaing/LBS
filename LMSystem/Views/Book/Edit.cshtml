@@ -1,0 +1,116 @@
+﻿@model BookViewModel
+@{
+    ViewData["Title"] = "Book";
+}
+<h3>Book Edit</h3>
+@{
+    var info = ViewData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(ViewData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<form action="/book/Update" method="post">
+    <input type="hidden"name="id" value="@Model.id"/>
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" placeholder="type Title" required name="Title" value="@Model.Title">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-select" name="Categoryid">
+            <option selected>Select Category</option>
+            @foreach (var Category in ViewBag.Category)
+                @if (Category.id == Model.Categoryid)
+                {
+                    <option value="@Category.id" selected>@Category.Name</option>
+                }
+                else
+                {
+                    <option value="@Category.id" >@Category.Name</option>
+                }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Author</label>
+        <select class="form-select" name="Authorid">
+            <option selected>Select Author</option>
+            @foreach (var Author in ViewBag.Author)
+                @if (Author.id == Model.Authorid)
+                {
+                    <option value="@Author.id" selected>@Author.Name</option>
+                }
+                else
+                {
+                    <option value="@Author.id">@Author.Name</option>
+                }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Publisher</label>
+        <select class="form-select" name="Publisherid">
+            <option selected>Select Publisher</option>
+            @foreach (var Publisher in ViewBag.Publisher)
+                @if (Publisher.id == Model.Publisherid)
+                {
+                    <option value="@Publisher.id"selected>@Publisher.Name</option>
+                }
+                else
+                {
+                    <option value="@Publisher.id">@Publisher.Name</option>
+                }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">PublicationYear</label>
+        <input type="number" class="form-control" placeholder="type PublicationYear" required name="PublicationYear" value="@Model.PublicationYear">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">NumberOfCopies</label>
+        <input type="number" class="form-control" placeholder="type NumberOfCopies" required name="NumberOfCopies" value="@Model.NumberOfCopies">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Language</label>
+        <input type="text" class="form-control" placeholder="type Language" required name="Language" value="@Model.language">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" placeholder="type description" required name="Description" value="@Model.Description">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Version</label>
+        <input type="text" class="form-control" placeholder="type Version" required name="Version" value="@Model.Version">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">ISBN</label>
+        <input type="text" class="form-control" placeholder="type ISBN" required name="ISBN" value="@Model.ISBN">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">UnitPrice</label>
+        <input type="text" class="form-control" placeholder="type UnitPrice" required name="UnitPrice" value="@Model.UnitPrice">
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="/book/list" class="btn btn-outline-primary">List</a>
+</form>

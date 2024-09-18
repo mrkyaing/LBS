@@ -1,0 +1,93 @@
+﻿@model IEnumerable<IssueBookViewModel>
+<h3>IssueBook List</h3>
+
+@{
+    var info = TempData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(TempData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<!-- Library Policy Section -->
+<div class="alert alert-info mt-4" role="alert">
+    <h5 class="alert-heading"><i class="fas fa-book"></i> Library Policy</h5>
+    <p class="mb-2">
+        <strong>Normal Issue Fees:</strong> 5% of the book's price.
+    </p>
+    <p class="mb-2">
+        <strong>Overdue Issue Fees:</strong> 15% of the book's price if returned after 14 days.
+    </p>
+    <p class="mb-0">
+        <strong>Overdue Period:</strong> Starts on the 15th day after the book is issued.
+    </p>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        @{
+            int i = 1;
+        }
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Book</th>
+            <th scope="col">Member</th>
+            <th scope="col">IssueDate</th>
+            <th scope="col">DueDate</th>
+           
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        { @foreach (var item in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@item.BookInfo</td>
+                    <td>@item.MemberInfo</td>
+                    <td>@item.IssueDate</td>
+                    <td>@item.DueDate</td>
+                    <td>
+                        <a href="/issuebook/return?id=@item.id" class="btn btn-success" onclick="return confirm('Are u sure to return your book?');">Return</a>
+
+                    </td>
+                  
+                    <td>
+                        <a href="/issuebook/edit?id=@item.id" class="btn btn-primary">Edit</a>
+
+                    </td>
+                    <td>
+                        <a href="/category/delete?id=@item.id" class="btn btn-danger" onclick="return confirm('Are u sure to delete?');">Delete</a>
+                    </td>
+
+                </tr>
+                i++;
+            }
+
+        }
+        else
+        {
+            <div class="alert alert-success" role="alert">
+                There is no Data!!
+            </div>
+        }
+
+
+
+    </tbody>
+</table>
+<a href="/issuebook/Entry" class="btn btn-outline-primary">IssueBook</a>

@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Member";
+}
+<h3>Member Entry</h3>
+@{
+    var info = ViewData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(ViewData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<form action="/member/entry" method="post">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" placeholder="type name" required name="Name">
+
+    </div>
+  
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" placeholder="type email" required name="Email">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Phone</label>
+        <input type="number" class="form-control" placeholder="type phone no" required name="Phone">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Adress</label>
+        <textarea class="form-control" placeholder="type address.." name="Adress"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Membership date</label>
+        <input type="date" class="form-control" placeholder="type membershipdate" required name="Membershipdate">
+
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label">Membership Type</label>
+        <select class="form-select" name="MembershipType">
+            <option selected>Select Member Type</option>
+            <option >Premium Member</option>
+            <option >Normal Member</option>
+            
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Entry</button>
+    <a href="/member/list" class="btn btn-outline-primary">List</a>
+</form>

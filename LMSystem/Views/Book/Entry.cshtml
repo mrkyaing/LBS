@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "Book";
+}
+<h3>Book Entry</h3>
+@{
+    var info = ViewData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(ViewData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<form action="/book/entry" method="post">
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" placeholder="type Title" required name="Title">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-select" name="Categoryid">
+            <option selected>Select Category</option>
+            @foreach(var Category in ViewBag.Category)
+            {
+                <option value="@Category.id">@Category.Name</option>
+            }    
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Author</label>
+        <select class="form-select" name="Authorid">
+            <option selected>Select Author</option>
+            @foreach (var Author in ViewBag.Author)
+            {
+                <option value="@Author.id">@Author.Name</option>
+            }
+        </select>
+    </div>
+     <div class="mb-3">
+        <label class="form-label">Publisher</label>
+        <select class="form-select" name="Publisherid">
+            <option selected>Select Publisher</option>
+            @foreach (var Publisher in ViewBag.Publisher)
+            {
+                <option value="@Publisher.id">@Publisher.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Publication Year (YYYY)</label>
+        <input type="number" class="form-control" placeholder="type PublicationYear" required name="PublicationYear" min="0" max="9999" maxlength="4">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Number Of Copies</label>
+        <input type="number" class="form-control" placeholder="type NumberOfCopies" required name="NumberOfCopies">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Language</label>
+        <input type="text" class="form-control" placeholder="type Language" required name="Language">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" placeholder="type description" required name="Description">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Version</label>
+        <input type="text" class="form-control" placeholder="type Version" required name="Version">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">ISBN</label>
+        <input type="text" class="form-control" placeholder="type ISBN" required name="ISBN">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Unit Price</label>
+        <input type="text" class="form-control" placeholder="type UnitPrice" required name="UnitPrice">
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Entry</button>
+    <a href="/book/list" class="btn btn-outline-primary">List</a>
+</form>

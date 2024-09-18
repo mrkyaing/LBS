@@ -1,0 +1,65 @@
+﻿@model AuthorViewModel
+@{
+    ViewData["Title"] = "Author";
+}
+<h3>Author Edit</h3>
+@{
+    var info = ViewData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(ViewData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<form action="/author/update" method="post">
+    <input type="hidden" name="id" value="@Model.id" />
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" required name="Name" value="@Model.Name">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Biography</label>
+        <input type="text" class="form-control" required name="Biography" value="@Model.Biography">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Phone</label>
+        <input type="number" class="form-control" required name="Phone" value="@Model.Phone">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" required name="Email" value="@Model.Email">
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Adress</label>
+        <textarea class="form-control" placeholder="type address.." name="Adress">@Model.Adress</textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">CreatedOn</label>
+        <input type="datetime" class="form-control" required name="CreatedAt" value="@Model.CreatedAt" readonly>
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">UpdatedOn</label>
+        <input type="datetime" class="form-control" required name="UpdatedAt" value="@Model.UpdatedAt" readonly>
+
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="/author/list" class="btn btn-outline-primary">List</a>
+</form>

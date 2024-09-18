@@ -1,0 +1,89 @@
+﻿@model IssueBookViewModel
+@{
+    ViewData["Title"] = "IssueBook";
+}
+<h3>IssueBook Edit</h3>
+@{
+    var info = ViewData["Info"];
+}
+@if (info != null)
+{
+    if (Convert.ToBoolean(ViewData["status"]))
+    {
+        <div class="alert alert-success" role="alert">
+            @info
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @info
+        </div>
+    }
+}
+
+<form action="/IssueBook/Update" method="post">
+    <input type="hidden" name="id" value="@Model.id" />
+
+    <div class="mb-3">
+        <label class="form-label">Book</label>
+        <select class="form-select" name="Bookid">
+            <option selected>Select Book</option>
+            @foreach (var Book in ViewBag.Book)
+                @if (Book.id == Model.Bookid)
+                {
+                    <option value="@Book.id" selected>@Book.Title</option>
+                    
+                }
+                else
+                {
+                    <option value="@Book.id">@Book.Title</option>
+                }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Member</label>
+        <select class="form-select" name="Memberid">
+            <option selected>Select Member</option>
+            @foreach (var Member in ViewBag.Member)
+                @if (Member.id == Model.Memberid)
+                {
+                    <option value="@Member.id"selected>@Member.Name</option>
+                }
+                else
+                {
+                    <option value="@Member.id">@Member.Name</option>
+                }
+        </select>
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label">IssueDate</label>
+        <input type="date" class="form-control" placeholder="type IssueDate" required name="IssueDate" id="IssueDate" value="@Model.IssueDate.ToString("yyyy-MM-dd")">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">DueDate</label>
+        <input type="date" class="form-control" placeholder="type DueDate" required name="DueDate" id="DueDate"  readonly value="@Model.DueDate.ToString("yyyy-MM-dd")">
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="/Issuebook/list" class="btn btn-outline-primary">List</a>
+</form>
+<script>
+    document.getElementById('IssueDate').addEventListener('change', function () {
+        var issueDate = new Date(this.value);
+        var dueDate = new Date(issueDate);
+        dueDate.setDate(issueDate.getDate() + 14);
+
+        var year = dueDate.getFullYear();
+        var month = ("0" + (dueDate.getMonth() + 1)).slice(-2);
+        var day = ("0" + dueDate.getDate()).slice(-2);
+
+        document.getElementById('DueDate').value = year + '-' + month + '-' + day;
+    });
+</script>
+
+
