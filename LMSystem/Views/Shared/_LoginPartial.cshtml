@@ -11,7 +11,7 @@
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="btnLogout" class="nav-link btn btn-link text-dark border-0" type="submit">Logout</button>
+                <button id="btnLogout" class="nav-link btn btn-link text-dark border-0" onclick="logout()">Logout</button>
         </form>
     </li>
 }
@@ -22,4 +22,36 @@ else
     </li>
 }
 </ul>
-<script src="~/js/account.js"></script>
+<script>
+    function logout() {
+        console.log("hi");
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, logout!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#logoutForm").submit();
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "You are still logged in :)",
+                    icon: "warning"
+                });
+            }
+        });
+    }
+
+</script>

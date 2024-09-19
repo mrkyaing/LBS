@@ -48,8 +48,3 @@
         }
     });
 }
-$("#btnLogout").on('click', function () {
-    console.log('hi');
-    logout();
-});
-
