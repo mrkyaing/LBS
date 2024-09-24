@@ -1,7 +1,7 @@
 ﻿using LMSystem.Models.Entities;
 using LMSystem.Models.ViewModels;
 using LMSystem.UnitOfWorks;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace LMSystem.Services
 {
@@ -56,38 +56,39 @@ namespace LMSystem.Services
             }
             return true;
         }
-        public IEnumerable<BookViewModel> GetAll()
+        public async Task<IEnumerable<BookViewModel>> GetAll()
         {
+            var books = from b in _unitOfWork.BookRepository.GetAll()
+                        join c in _unitOfWork.CategoryRepository.GetAll()
+                        on b.Categoryid equals c.id
+                        join a in _unitOfWork.AuthorRepository.GetAll()
+                        on b.Authorid equals a.id
+                        join p in _unitOfWork.PublisherRepository.GetAll()
+                        on b.Publisherid equals p.id
+                        where !b.IsInActive
+                        select new BookViewModel
+                        {
+                            id = b.id,
+                            Title = b.Title,
+                            Categoryid = b.Categoryid,
+                            Authorid = b.Authorid,
+                            Publisherid = b.Publisherid,
+                            PublicationYear = b.PublicationYear,
+                            NumberOfCopies = b.NumberOfCopies,
+                            language = b.language,
+                            Description = b.Description,
+                            Version = b.Version,
+                            ISBN = b.ISBN,
+                            UnitPrice = b.UnitPrice,
+                            CategoryInfo = c.Name,
+                            AuthorInfo = a.Name,
+                            PublisherInfo = p.Name,
+                        };
 
-            IEnumerable<BookViewModel> book = (from b in _unitOfWork.BookRepository.GetAll()
-                                               join c in _unitOfWork.CategoryRepository.GetAll()
-                                               on b.Categoryid equals c.id
-                                               join a in _unitOfWork.AuthorRepository.GetAll()
-                                               on b.Authorid equals a.id
-                                               join p in _unitOfWork.PublisherRepository.GetAll()
-                                               on b.Publisherid equals p.id
-                                               where !b.IsInActive
-                                               select new BookViewModel
-                                               {
-                                                   id = b.id,
-                                                   Title = b.Title,
-                                                   Categoryid = b.Categoryid,
-                                                   Authorid = b.Authorid,
-                                                   Publisherid = b.Publisherid,
-                                                   PublicationYear = b.PublicationYear,
-                                                   NumberOfCopies = b.NumberOfCopies,
-                                                   language = b.language,
-                                                   Description = b.Description,
-                                                   Version = b.Version,
-                                                   ISBN = b.ISBN,
-                                                   UnitPrice = b.UnitPrice,
-                                                   CategoryInfo = c.Name,
-                                                   AuthorInfo = a.Name,
-                                                   PublisherInfo = p.Name,
-
-                                               }).AsEnumerable();
-            return book;
+            // Asynchronous query execution to prevent blocking
+            return await Task.FromResult(books.AsEnumerable());
         }
+
 
         public IEnumerable<BookViewModel> GetBooks()
         {

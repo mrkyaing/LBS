@@ -71,7 +71,7 @@ namespace LMSystem.Controllers
 
         public IActionResult List()
         {
-            var book = _bookService.GetAll().ToList();
+            var book = _bookService.GetAll().Result;
             return View(book);
         }
         public IActionResult Edit(string id)

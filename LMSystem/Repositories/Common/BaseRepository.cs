@@ -15,18 +15,18 @@ namespace LMSystem.Repositories.Common
         }
         public void Create(T entity)
         {
-          _dbContext.Add<T>(entity);
+            _dbContext.Add<T>(entity);
         }
 
         public void Delete(T entity)
         {
-           _dbContext.Update<T>(entity);
+            _dbContext.Update<T>(entity);
         }
 
         public IEnumerable<T> GetAll()
         {
+            // AsNoTracking is useful if you're only reading and won't modify the entities
             return _dbSet.AsNoTracking().AsEnumerable();
-
         }
 
         public IEnumerable<T> Getby(Expression<Func<T, bool>> expression)
@@ -39,6 +39,6 @@ namespace LMSystem.Repositories.Common
             _dbContext.Update<T>(entity);
         }
 
-        
+        public void Dispose() => _dbContext.Dispose();
     }
 }

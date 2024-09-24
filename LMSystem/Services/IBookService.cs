@@ -5,7 +5,7 @@ namespace LMSystem.Services
     public interface IBookService
     {
         void Create(BookViewModel bookViewModel);
-        IEnumerable<BookViewModel> GetAll();
+        Task<IEnumerable<BookViewModel>> GetAll();
         BookViewModel GetById(string id);
         void Update(BookViewModel bookViewModel);
         bool Delete(string id);

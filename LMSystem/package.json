@@ -5,5 +5,8 @@
   "devDependencies": {
     "@sweetalert2/theme-bootstrap-4": "^5.0.15",
     "sweetalert2": "^11.14.0"
+  },
+  "dependencies": {
+    "asp.net": "file:"
   }
 }
