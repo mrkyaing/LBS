@@ -4,21 +4,21 @@ using LMSystem.Services.ReportingServices;
 using LMSystem.UnitOfWorks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
-using Pomelo.EntityFrameworkCore.MySql.Internal;
-using System.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 var config = builder.Configuration;
 var connectionString = config.GetConnectionString("LMSystemConnectionstring");
-// builder.Services.AddDbContext<LMSystemDbContext>(o =>o.UseSqlServer(config.GetConnectionString("LMSystemConnectionstring")));
+//Database Connection with MS SQL
+builder.Services.AddDbContext<LMSystemDbContext>(o => o.UseSqlServer(config.GetConnectionString("LMSystemConnectionstring")));
 
-builder.Services.AddDbContext<LMSystemDbContext>(options =>
-    options.UseMySql(connectionString,
-    new MySqlServerVersion(new Version(8, 0, 35)),
-    mySqlOptions => mySqlOptions.EnableRetryOnFailure()));
+//Database Connection with MySQL
+//builder.Services.AddDbContext<LMSystemDbContext>(options =>
+//    options.UseMySql(connectionString,
+//    new MySqlServerVersion(new Version(8, 0, 35)),
+//    mySqlOptions => mySqlOptions.EnableRetryOnFailure()));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
