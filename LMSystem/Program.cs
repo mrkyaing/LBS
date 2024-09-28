@@ -12,13 +12,13 @@ builder.Services.AddControllersWithViews();
 var config = builder.Configuration;
 var connectionString = config.GetConnectionString("LMSystemConnectionstring");
 //Database Connection with MS SQL
-builder.Services.AddDbContext<LMSystemDbContext>(o => o.UseSqlServer(config.GetConnectionString("LMSystemConnectionstring")));
+//builder.Services.AddDbContext<LMSystemDbContext>(o => o.UseSqlServer(config.GetConnectionString("LMSystemConnectionstring")));
 
 //Database Connection with MySQL
-//builder.Services.AddDbContext<LMSystemDbContext>(options =>
-//    options.UseMySql(connectionString,
-//    new MySqlServerVersion(new Version(8, 0, 35)),
-//    mySqlOptions => mySqlOptions.EnableRetryOnFailure()));
+builder.Services.AddDbContext<LMSystemDbContext>(options =>
+    options.UseMySql(connectionString,
+    new MySqlServerVersion(new Version(8, 0, 35)),
+    mySqlOptions => mySqlOptions.EnableRetryOnFailure()));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
