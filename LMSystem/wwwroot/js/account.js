@@ -1,5 +1,4 @@
 ﻿function logout() {
-    console.log("hi");
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: "btn btn-success",
