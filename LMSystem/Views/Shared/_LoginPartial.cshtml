@@ -22,36 +22,5 @@ else
     </li>
 }
 </ul>
-<script>
-    function logout() {
-        console.log("hi");
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: "btn btn-success",
-                cancelButton: "btn btn-danger"
-            },
-            buttonsStyling: false
-        });
-
-        swalWithBootstrapButtons.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, logout!",
-            cancelButtonText: "No, cancel!",
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $("#logoutForm").submit();
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                swalWithBootstrapButtons.fire({
-                    title: "Cancelled",
-                    text: "You are still logged in :)",
-                    icon: "warning"
-                });
-            }
-        });
-    }
-
-</script>
+<!-- Include the JavaScript file -->
+<script src="~/js/account.js"></script>
